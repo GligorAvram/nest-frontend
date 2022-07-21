@@ -12,12 +12,12 @@ import {EditRacerComponent} from "./components/edit-racer/edit-racer.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AddRacerComponent} from './components/add-racer/add-racer.component';
 import {StoreModule} from '@ngrx/store';
-import {racerReducer} from "./state/reducers/racer.reducer";
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from "@ngrx/effects";
 import {RacerEffects} from "./state/effects/racer.effects";
 import {NgEventBus} from "ng-event-bus";
+import {reducers} from "./state";
 
 
 @NgModule({
@@ -35,7 +35,7 @@ import {NgEventBus} from "ng-event-bus";
     RouterModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({racers: racerReducer}),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     EffectsModule.forRoot([RacerEffects])
   ],

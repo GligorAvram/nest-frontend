@@ -5,7 +5,7 @@ import {UpdateRacerDto} from "../../dtos/update-racer.dto";
 
 
 export const getRacers = createAction('[RACER] Get racers');
-export const getRacersSuccess = createAction('[RACER] Get racers success', (racers: ReadonlyArray<Racer>) => ({racers}));
+export const getRacersSuccess = createAction('[RACER] Get racers success', (data: ReadonlyArray<Racer>) => ({data}));
 
 export const addRacer = createAction('[RACER] Add racer', (racer: CreateRacerDto) => (racer));
 export const addRacerSuccess = createAction('[RACER] Add racer success', (racer: Racer) => (racer));

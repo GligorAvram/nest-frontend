@@ -8,27 +8,67 @@ import {
   getRacersSuccess
 } from "../actions/racer.actions";
 
+export const racerFeatureKey = 'racer'
 
 export interface RacerState {
   showLoading: boolean;
-  racers: ReadonlyArray<Racer>;
   errors: string;
+  racers: {
+    showLoading: boolean;
+    list: ReadonlyArray<Racer>;
+    errors: string;
+  };
 }
 
 const initialState: RacerState = {
   showLoading: false,
-  racers: [],
+  racers: {
+    showLoading: false,
+    list: [],
+    errors: ''
+  },
   errors: ''
 }
 
-export const racerReducer = createReducer(initialState.racers,
-  on(getRacersSuccess, (state, {racers}) => (racers)),
-  on(addRacerSuccess, (state, racer) => ([...state, racer])),
-  on(deleteRacerSuccess, (state, racer) => (state.filter(r => r.id != racer.id))),
-  on(deleteRacerFailure, (state, racer) => (state)),
+export const racerReducer = createReducer(initialState,
+  on(getRacersSuccess, (state, {data}) => (
+    {
+      ...state,
+      racers: {
+        ...state.racers,
+        list: data
+      }
+    }
+  )),
+  on(addRacerSuccess, (state, data) => (
+    {
+      ...state,
+      racers: {
+        ...state,
+        list: [...state.racers.list, data]
+      }
+    }
+  )),
+  on(deleteRacerSuccess, (state, data) => (
+    {
+      ...state,
+      racers: {
+        ...state,
+        list: state.racers.list.filter(r => r.id != data.id)
+      }
+    }
+  )),
+  on(deleteRacerFailure, (state, data) => (
+    {
+      ...state,
+      racers: {
+        ...state.racers,
+        errors: "error " + data.id
+      }
+    })),
   on(editRacerSuccess, (state, racer) => {
       const newState: Racer[] = [];
-      state.forEach(r => {
+      state.racers.list.forEach(r => {
         if (r.id == racer.id) {
           newState.push({
             id: racer.id,
@@ -41,7 +81,14 @@ export const racerReducer = createReducer(initialState.racers,
           newState.push(r);
         }
       })
-    return newState;
+
+      return {
+        ...state,
+        racers: {
+          ...state.racers,
+          list: newState
+        }
+      }
     }
   )
 )

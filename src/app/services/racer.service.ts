@@ -36,7 +36,7 @@ export class RacerService {
 
   deleteRacer($racer: Racer): Observable<HttpStatusCode> {
     const id = $racer.id;
-    // return this.http.delete<HttpStatusCode>(environment.api + `/racer/${id}`);
-    return this.http.delete<HttpStatusCode>(environment.api + `/racer/99999`);
+    return this.http.delete<HttpStatusCode>(environment.api + `/racer/${id}`);
+    // return this.http.delete<HttpStatusCode>(environment.api + `/racer/99999`);
   }
 }

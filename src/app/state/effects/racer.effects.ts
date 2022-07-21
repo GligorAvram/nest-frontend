@@ -13,8 +13,7 @@ import {
   getRacersSuccess
 } from "../actions/racer.actions";
 import {Router} from "@angular/router";
-import {HttpStatusCode} from "@angular/common/http";
-import {concatMap, exhaustMap, map, tap} from "rxjs";
+import {catchError, concatMap, exhaustMap, map, tap} from "rxjs";
 
 
 @Injectable()
@@ -58,8 +57,8 @@ export class RacerEffects {
         ofType(deleteRacer),
         concatMap(racer =>
           this.racerService.deleteRacer(racer).pipe(
-            map((result) => result === HttpStatusCode.Ok ? deleteRacerSuccess(racer) : deleteRacerFailure(racer)
-            )
+            map(() => deleteRacerSuccess(racer)),
+            catchError(async () => deleteRacerFailure(racer))
           )
         )
       );

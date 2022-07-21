@@ -1,13 +1,18 @@
-import {createSelector} from "@ngrx/store";
+import {createFeatureSelector, createSelector} from "@ngrx/store";
+import * as fromRacer from "../reducers/racer.reducer";
 import {RacerState} from "../reducers/racer.reducer";
-import {Racer} from "../../models/racer.model";
+
+export const selectRacerState = createFeatureSelector<fromRacer.RacerState>(
+  fromRacer.racerFeatureKey
+)
+
 
 export const racerSelector = createSelector(
-  (state: RacerState) => state.racers,
-  (racers: ReadonlyArray<Racer>) => racers,
+  selectRacerState,
+  (state: RacerState) => state.racers.list
 );
 
-export const errorSelector = createSelector(
-  (state: RacerState) => state.errors,
-  (errors: string) => errors
+export const racerErrorSelector = createSelector(
+  selectRacerState,
+  (state) => state.racers.errors
 )
