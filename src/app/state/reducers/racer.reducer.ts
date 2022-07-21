@@ -21,20 +21,14 @@ const initialState: RacerState = {
   errors: ''
 }
 
-export const racerReducer = createReducer(initialState,
-  on(getRacersSuccess, (state, {racers}) => {
-    return {showLoading: false, racers: [...racers], errors: ''}
-  }),
-  on(addRacerSuccess, (state, racer) => ({showLoading: false, racers: [...state.racers, racer], errors: ''})),
-  on(deleteRacerSuccess, (state, racer) => ({
-    showLoading: false,
-    racers: state.racers.filter(r => r.id != racer.id),
-    errors: ''
-  })),
-  on(deleteRacerFailure, (state, racer) => ({showLoading: false, racers: state.racers, errors: "error"})),
+export const racerReducer = createReducer(initialState.racers,
+  on(getRacersSuccess, (state, {racers}) => (racers)),
+  on(addRacerSuccess, (state, racer) => ([...state, racer])),
+  on(deleteRacerSuccess, (state, racer) => (state.filter(r => r.id != racer.id))),
+  on(deleteRacerFailure, (state, racer) => (state)),
   on(editRacerSuccess, (state, racer) => {
       const newState: Racer[] = [];
-      state.racers.forEach(r => {
+      state.forEach(r => {
         if (r.id == racer.id) {
           newState.push({
             id: racer.id,
@@ -47,7 +41,7 @@ export const racerReducer = createReducer(initialState,
           newState.push(r);
         }
       })
-      return {showLoading: false, racers: newState, errors: "error"};
+    return newState;
     }
   )
 )
