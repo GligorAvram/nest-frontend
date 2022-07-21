@@ -1,0 +1,17 @@
+<div>
+  <a routerLink="/">Back</a>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="addRacerForm">
+
+    <label for="name">Name: </label>
+    <input formControlName="name" id="name" placeholder="name" type="text">
+
+    <label for="car">Car: </label>
+    <input formControlName="car" id="car" placeholder="car" type="text">
+
+    <label for="isLegal">Can race: </label>
+    <input formControlName="isLegal" id="isLegal" type="checkbox">
+
+    <button [disabled]="!addRacerForm.valid" type="submit">Submit</button>
+  </form>
+</div>

@@ -1,0 +1,8 @@
+<div class="container">
+
+  <a routerLink="/addRacer">Add racer</a>
+  <!--  <div *ngIf="errors$ | async">Error occured</div>-->
+  <div *ngFor="let racer of racers$ | async" class="racer">
+    <app-listed-racer (racerToDeleteEmitter)="deleteRacer($event)" [listedRacer]="racer"></app-listed-racer>
+  </div>
+</div>

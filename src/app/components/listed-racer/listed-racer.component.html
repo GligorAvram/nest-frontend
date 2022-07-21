@@ -1,0 +1,18 @@
+<div *ngIf="listedRacer">
+  <div>
+    <span>{{ listedRacer.name }}</span>
+    <span>{{ listedRacer.car }}</span>
+    <span>{{ listedRacer.position }}</span>
+    <span>{{ listedRacer.id }}</span>
+    <span>{{ listedRacer.is_legal ? 'Yes' : 'No' }}</span>
+    <a class="button" [routerLink]="['/editRacer']" [queryParams]="{
+        id: listedRacer.id,
+        name: listedRacer.name,
+        car: listedRacer.car,
+        position: listedRacer.position,
+        isLegal: listedRacer.is_legal
+      }"
+    >Edit</a>
+    <span><button (click)="deleteRacer(listedRacer)"  >Delete</button></span>
+  </div>
+</div>

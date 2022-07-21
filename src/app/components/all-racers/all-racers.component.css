@@ -1,0 +1,5 @@
+.racer {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
